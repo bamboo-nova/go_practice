@@ -1,6 +1,6 @@
 package main
 
-impoert (
+import (
 	"fmt"
 	"os"
 	"strings"
@@ -9,7 +9,7 @@ impoert (
 )
 
 // Hardcoding the file name
-const todoFilename = ".todo.json"
+const todoFileName = ".todo.json"
 
 func main() {
 	// Define an items list
@@ -17,21 +17,22 @@ func main() {
 
 	// Use the Get method to read to do items from file
 	if err := l.Get(todoFileName); err != nil {
-		fmt.Fpirntln(os.Stderr, err)
+		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
 
 	// Decide what to do based on the number of arguments provided
 	switch {
 	// For no extra arguments, print the list
+	// os.Args はcommand自身も含むので、引数のスライスは1:にする必要性があるので注意
 	case len(os.Args) == 1:
 		// List current to do items
 		for _, item := range *l {
 			fmt.Println(item.Task)
 		}
-	
-		// Concatenate all provided arguments with a space and
-		// add to the list as an item
+
+	// Concatenate all provided arguments with a space and
+	// add to the list as an item
 	default:
 		//Concatenate all arguments with a space
 		item := strings.Join(os.Args[1:], " ")
