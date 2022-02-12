@@ -12,6 +12,15 @@ import (
 const todoFileName = ".todo.json"
 
 func main() {
+	// flag.Usage doumentation added
+	flag.Usage = func() {
+		fmt.Fprintf(flag.CommandLine.Output(),
+			"%s tool. Developed for The Pragmatic Bookshelf\n", os.Args[0])
+		fmt.Fprintf(flag.CommandLine.Output(), "Copyright 2020\n")
+		fmt.Fprintln(flag.CommandLine.Output(), "Usage information:")
+		flag.PrintDefaults()
+	}
+
 	// Parsing command line flags
 	// ※ここで割り当てられた変数はポインタなので、dereferencedにするために*のオペレータをつける必要性がある
 	task := flag.String("task", "", "Task to be included in the ToDo list")
