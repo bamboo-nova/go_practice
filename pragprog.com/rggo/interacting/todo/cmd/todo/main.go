@@ -8,8 +8,8 @@ import (
 	"pragprog.com/rggo/interacting/todo"
 )
 
-// Hardcoding the file name
-const todoFileName = ".todo.json"
+// Default file name
+var todoFileName = ".todo.json"
 
 func main() {
 	// flag.Usage doumentation added
@@ -19,6 +19,13 @@ func main() {
 		fmt.Fprintf(flag.CommandLine.Output(), "Copyright 2020\n")
 		fmt.Fprintln(flag.CommandLine.Output(), "Usage information:")
 		flag.PrintDefaults()
+	}
+
+	// Check if the uesr defined the ENV VAR for a custom file name
+	// main.goで起動するのでmain関数の中に入れる必要があるので注意
+	// export TODO_FILENAME=new-todo.jsonの後にいつも通り実行すれば良い
+	if os.Getenv("TODO_FILENAME") != "" {
+		todoFileName = os.Getenv("TODO_FILENAME")
 	}
 
 	// Parsing command line flags
